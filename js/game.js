@@ -11,8 +11,7 @@ function mod(n, m) {
         return ((n % m) + m) % m;
 }
 var pos = new Object;
-pos.x = 0;
-pos.y = 0;
+
 var food = new Object;
 food.x = 1;
 food.y = 1;
@@ -20,6 +19,37 @@ function eat(x, y)
 {
 	return x == food.x && y == food.y;
 }
+function collision(list, pos)
+{
+	var ptr = list._head;
+	ptr = ptr._next	;
+	while ( ptr != null )
+	{
+		mynode = ptr._data;
+		// console.log("HALO: "+mynode);
+		if ( mynode != null )
+		{	
+			// console.log(pos);
+			// console.log(mynode.position);
+			if ( mynode.position.x - cside/2 == pos.x && mynode.position.y - cside/2 == pos.y)
+				return 1;
+		}
+		ptr = ptr._next;
+	}
+	return 0;
+}
+function seq(list){
+        var ptr = list._head;
+        while ( ptr._next )
+        {
+          ptr = ptr._next;
+          if ( ptr != null)
+          {
+          	mydata = ptr._data;
+            console.log(mydata.positon);
+          }
+        }
+      };
 var direction = "up";
 var cside = 1;
 var geometry = new THREE.BoxGeometry( cside, cside, cside );
@@ -27,7 +57,8 @@ var material = new THREE.MeshNormalMaterial();
 var cube = new THREE.Mesh( geometry, material );
 cube.position.x += cside / 2;
 cube.position.y += cside / 2;
-
+pos.x = 0;
+pos.y = 1;
 
 	// scene.add( cube.clone() );
 var keyboard = new THREEx.KeyboardState();
@@ -44,8 +75,8 @@ var plane = new THREE.Mesh(
         wireframe: true
     } )
 );
-plane.position.x += planeW/2-0.5;
-plane.position.y += planeH/2-0.5;
+plane.position.x += planeW/2;
+plane.position.y += planeH/2;
 scene.add(plane);
 
 controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -70,12 +101,18 @@ var render = function () {
     }, 1000 / 6);
   // cube.position.x = pos.x;
   // cube.position.y = pos.y;
+  if ( collision(queue, pos) )
+	{
+		console.log("GAME OVER");
+	}
+
   copy = cube.clone();
-  copy.position.x += pos.x - 0.5;
-  copy.position.y += pos.y - 0.5;
+  copy.position.x += pos.x;
+  copy.position.y += pos.y;
   queue.push(copy);
   scene.add(copy);
   // take input 
+  
   if ( !eat(pos.x, pos.y) )
   	{
   		last = queue.shift();

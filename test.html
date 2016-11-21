@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Basic Three.js App</title>
+    <style>
+      html, body { margin: 0; padding: 0; overflow: hidden; }
+      body {
+       z-index: 998;
+      opacity:1;
+      background: white;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="js/Dequeue.js"></script>
+    <script src="js/Keyboard.js"></script>
+    <script src="js/three.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <!-- <script src="js/game.js"></script> -->
+    <script>
+      function seq(list){
+        var ptr = list._head;
+        while ( ptr._next )
+        {
+          ptr = ptr._next;
+          if ( ptr )
+          {
+            console.log(ptr._data);
+          }
+        }
+      };
+      var list = new Dequeue();
+      list.push(1);
+      list.push(2);
+      list.push(3);
+      list.push(4);
+      list.push(5);
+      seq(list);
+    </script>
+
+  </body>
+</html>
