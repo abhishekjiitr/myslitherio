@@ -40,8 +40,8 @@ var plane = new THREE.Mesh(
         wireframe: true
     } )
 );
-plane.position.x += planeW/2;
-plane.position.y += planeH/2;
+plane.position.x += planeW/2-0.5;
+plane.position.y += planeH/2-0.5;
 scene.add(plane);
 
 controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -52,33 +52,32 @@ camera.rotation.x += 30 * Math.PI / 180;
 camera.rotation.y -= 20 * Math.PI / 180;
 camera.rotation.z -= 10 * Math.PI / 180;
 
+var queue = new Queue();
+
 var render = function () {
   setTimeout( function() {
 
         requestAnimationFrame( render );
 
-    }, 1000 / 7);
-
+    }, 1000 / 6);
+  cube.position.x = pos.x;
+  cube.position.y = pos.y;
   // take input 
   if ( keyboard.pressed("up") )
   	{
   		direction = "up";
-  		cube.position.y = mod(cube.position.y + 1, planeH);
   	}
   if ( keyboard.pressed("down") )
     {
     	direction = "down";
-    	cube.position.y = mod(cube.position.y - 1, planeH);
     }
   if ( keyboard.pressed("left") )
     {
     	direction = "left";
-    	cube.position.x = mod(cube.position.x - 1, planeW);
     }
   if ( keyboard.pressed("right") )
     {
     	direction = "right";
-    	cube.position.x = mod(cube.position.x + 1, planeW);
     }	
   // console.log(pos.x+ " : "+ pos.y);
   if ( direction == "up" )
