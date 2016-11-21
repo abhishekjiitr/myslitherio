@@ -27,10 +27,10 @@ pos.y = 1;
 var keyboard = new THREEx.KeyboardState();
 
 // generate a grid!
-var planeW = 8; // number of squares in x
-var planeH = 8; // number of squares in y
-var numW = 1; // width of each square 
-var numH = 1; // length of each square
+var planeW = 14; // number of squares in x
+var planeH = 14; // number of squares in y
+var numW = cside; // width of each square 
+var numH = cside; // length of each square
 var plane = new THREE.Mesh(
     new THREE.PlaneGeometry( planeW*numW, planeH*numH, planeW, planeH ),
     new THREE.MeshBasicMaterial( {
@@ -76,6 +76,7 @@ scene.add( firstcube );
 queue.push(firstcube);
 var gameon = true;
 var id;
+
 // add some food
 var r = 0.5;
 var geometry = new THREE.SphereBufferGeometry( r, 32, 32 );
@@ -85,98 +86,61 @@ var material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture(
 var sphere = new THREE.Mesh( geometry, material );
 sphere.position.z += r;
 scene.add( sphere );
-var render = function () {
-  setTimeout( function() {
-  		if ( gameon )
-        	id = requestAnimationFrame( render );
 
-    }, 1000 / 6);
-  // cube.position.x = pos.x;
-  // cube.position.y = pos.y;
-  sphere.position.x = food.x + r;
-  sphere.position.y = food.y + r;
-  sphere.rotation.z += 0.1;
-  sphere.rotation.x += 0.05;
-  if ( collision(queue, pos) )
+// Render Loop
+var render = function () {
+	takeInput();	
+	setTimeout( function() {
+			if ( gameon )
+	    	id = requestAnimationFrame( render );
+
+	}, 1000 / (score+2.9));
+
+	sphere.position.x = food.x + r;
+	sphere.position.y = food.y + r;
+	sphere.rotation.z += 0.1;
+	sphere.rotation.x += 0.05;
+	if ( collision(queue, pos) )
 	{
 		alert("GAME OVER! You managed to score " + score + " points.");
 		gameon = false;
 		cancelAnimationFrame( id );
-        window.cancelAnimationFrame(id);
+	    window.cancelAnimationFrame(id);
 
 		console.log("GAME OVER");
 	}
 
-  copy = cube.clone();
-  copy.material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('images/head.jpg',THREE.SphericalRefractionMapping) } ); 
-  copy.material.map.needsUpdate = true;
-  copy.position.x += pos.x;
-  copy.position.y += pos.y;
-  queue.push(copy);
-  scene.add(copy);
-  // take input 
-  
-  if ( !eat(pos.x, pos.y) )
-  	{
-  		last = queue.shift();
-  		scene.remove(last);
-  		// queue.pop();
-  	}
-  else
-  	{
-  		score++;
-  		document.getElementById("score").innerHTML = "Score: " + score;
+	copy = cube.clone();
+	copy.material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('images/head.jpg',THREE.SphericalRefractionMapping) } ); 
+	copy.material.map.needsUpdate = true;
+	copy.position.x += pos.x;
+	copy.position.y += pos.y;
+	queue.push(copy);
+	scene.add(copy);
 
-  		console.log("Score: " + score);
-  		newloc = getFreeLocation(queue);
-  		food.x = newloc.x;
-  		food.y = newloc.y;
-  	}
-  if ( keyboard.pressed("up") )
-  	{
-  		if ( direction != "down" )
-  			direction = "up";
-  	}
-  if ( keyboard.pressed("down") )
-    {
-    	if ( direction != "up" )
-    		direction = "down";
-    }
-  if ( keyboard.pressed("left") )
-    {
-    	if ( direction != "right" )
-    		direction = "left";
-    }
-  if ( keyboard.pressed("right") )
-    {
-    	if ( direction != "left" ) 
-    		direction = "right";
-    }	
-  // console.log(pos.x+ " : "+ pos.y);
-  if ( direction == "up" )
-  	{
-  		pos.y = mod(pos.y + 1, planeH);
-  	}
-  if ( direction == "down" )
-  	{
-  		pos.y = mod(pos.y-1, planeH);
-  	}
-  if ( direction == "left" )
-  	{
-  		pos.x = mod(pos.x-1, planeW);
-  	}
-  if ( direction == "right" )
-  	{
-  		pos.x = mod(pos.x+1, planeW);
-  	}
-    // cube.rotation.x += 0.1;
-	    
+	if ( !eat(pos.x, pos.y) )
+		{
+			last = queue.shift();
+			scene.remove(last);
+			// queue.pop();
+		}
+	else
+		{
+			score++;
+			document.getElementById("score").innerHTML = "Score: " + score;
+
+			console.log("Score: " + score);
+			newloc = getFreeLocation(queue);
+			food.x = newloc.x;
+			food.y = newloc.y;
+		}
+
   renderer.render( scene, camera );
 };
 foodpt = getFreeLocation(queue);
 food.x = foodpt.x;
 food.y = foodpt.y;
-
+alert("Use the arrow keys to control the snake");
 render();
 
 function eat(x, y)
@@ -202,7 +166,60 @@ function collision(list, pos)
 	}
 	return 0;
 };
+function takeInput()
+{
+	if ( keyboard.pressed("up") )
+		{
+			if ( direction != "down" )
+				direction = "up";
+		}
+	if ( keyboard.pressed("down") )
+	  {
+	  	if ( direction != "up" )
+	  		direction = "down";
+	  }
+	if ( keyboard.pressed("left") )
+	  {
+	  	if ( direction != "right" )
+	  		direction = "left";
+	  }
+	if ( keyboard.pressed("right") )
+	  {
+	  	if ( direction != "left" ) 
+	  		direction = "right";
+	  }	
+	// console.log(pos.x+ " : "+ pos.y);
+	if ( direction == "up" )
+			pos.y = mod(pos.y + 1, planeH);
+	if ( direction == "down" )
+			pos.y = mod(pos.y-1, planeH);
+	if ( direction == "left" )
+			pos.x = mod(pos.x-1, planeW);
+	if ( direction == "right" )
+			pos.x = mod(pos.x+1, planeW);
+	  // cube.rotation.x += 0.1;
 
+}
+function onDocumentKeyDown(event){ 
+    // Get the key code of the pressed key 
+    var keyCode = event.which; 
+    // 'F' - Toggle through the texture filters 
+    var left = 37;
+    var up = 38;
+    var right = 39;
+    var down = 40;
+    switch(keyCode)
+    {
+    	case left:
+    		direction = "left";
+    	case up:
+    		direction = "up";
+    	case right:
+    		direction = "right";
+    	case down:
+    		direction = "down";
+    } 
+} 
 function presentIn(list, x, y)
 {
 	for(var i = 0 ; i < list.length ; i++)
