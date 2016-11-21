@@ -15,7 +15,7 @@ food.y = 1;
 var direction = "up";
 var cside = 1;
 var geometry = new THREE.BoxGeometry( cside, cside, cside );
-var material = new THREE.MeshNormalMaterial();
+var material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('images/snake.jpg',THREE.SphericalRefractionMapping) } );
 var cube = new THREE.Mesh( geometry, material );
 cube.position.x += cside / 2;
 cube.position.y += cside / 2;
@@ -69,7 +69,9 @@ directionalLight.position.set( -1, 0, 0 );
 scene.add( directionalLight );
 var queue = new Dequeue();
 
-firstcube = cube.clone();
+var geometry = new THREE.BoxGeometry( cside, cside, cside );
+var material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('images/snake.jpg',THREE.SphericalRefractionMapping) } );
+var firstcube = new THREE.Mesh( geometry, material );
 scene.add( firstcube );
 queue.push(firstcube);
 var gameon = true;
@@ -106,6 +108,8 @@ var render = function () {
 	}
 
   copy = cube.clone();
+  copy.material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('images/head.jpg',THREE.SphericalRefractionMapping) } ); 
+  copy.material.map.needsUpdate = true;
   copy.position.x += pos.x;
   copy.position.y += pos.y;
   queue.push(copy);
@@ -121,6 +125,8 @@ var render = function () {
   else
   	{
   		score++;
+  		document.getElementById("score").innerHTML = "Score: " + score;
+
   		console.log("Score: " + score);
   		newloc = getFreeLocation(queue);
   		food.x = newloc.x;
