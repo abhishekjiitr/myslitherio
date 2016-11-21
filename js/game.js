@@ -2,7 +2,7 @@ var scene = new THREE.Scene();
 var aspect = window.innerWidth / window.innerHeight;
 var camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
 var renderer = new THREE.WebGLRenderer();
-renderer.setClearColor (0xffffff, 1);
+renderer.setClearColor (0xf2fdff, 1);
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
@@ -87,12 +87,37 @@ camera.rotation.x += 30 * Math.PI / 180;
 camera.rotation.y -= 20 * Math.PI / 180;
 camera.rotation.z -= 10 * Math.PI / 180;
 
+var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+scene.add( light );
+
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+directionalLight.position.set( 0, 1, 0 );
+scene.add( directionalLight );
+
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+directionalLight.position.set( -1, -1, -1 );
+scene.add( directionalLight );
+var queue = new Dequeue();
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+directionalLight.position.set( 1, 1, 1 );
+scene.add( directionalLight );
 var queue = new Dequeue();
 
 firstcube = cube.clone();
 scene.add( firstcube );
 queue.push(firstcube);
 
+// add some cupcake
+loader = new THREE.ColladaLoader();
+loader.load('models/cupcake.dae',function colladaReady( collada ){
+player = collada.scene;
+skin = collada.skins [ 0 ];
+player.rotation.x += Math.PI * 2;
+player.rotation.y += Math.PI * 2;
+player.position.z = 0.3;
+player.scale.set(0.7, 0.7, 0.7);
+scene.add( player );
+});
 var render = function () {
   setTimeout( function() {
 
