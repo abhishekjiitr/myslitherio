@@ -6,50 +6,12 @@ renderer.setClearColor (0xf2fdff, 1);
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-// fucking mod bug
-function mod(n, m) {
-        return ((n % m) + m) % m;
-}
 var pos = new Object;
 
 var food = new Object;
 food.x = 1;
 food.y = 1;
-function eat(x, y)
-{
-	return x == food.x && y == food.y;
-}
-function collision(list, pos)
-{
-	var ptr = list._head;
-	ptr = ptr._next	;
-	while ( ptr != null )
-	{
-		mynode = ptr._data;
-		// console.log("HALO: "+mynode);
-		if ( mynode != null )
-		{	
-			// console.log(pos);
-			// console.log(mynode.position);
-			if ( mynode.position.x - cside/2 == pos.x && mynode.position.y - cside/2 == pos.y)
-				return 1;
-		}
-		ptr = ptr._next;
-	}
-	return 0;
-}
-function seq(list){
-        var ptr = list._head;
-        while ( ptr._next )
-        {
-          ptr = ptr._next;
-          if ( ptr != null)
-          {
-          	mydata = ptr._data;
-            console.log(mydata.positon);
-          }
-        }
-      };
+
 var direction = "up";
 var cside = 1;
 var geometry = new THREE.BoxGeometry( cside, cside, cside );
@@ -57,6 +19,7 @@ var material = new THREE.MeshNormalMaterial();
 var cube = new THREE.Mesh( geometry, material );
 cube.position.x += cside / 2;
 cube.position.y += cside / 2;
+cube.position.z += cside / 2;
 pos.x = 0;
 pos.y = 1;
 
@@ -79,7 +42,6 @@ plane.position.x += planeW/2;
 plane.position.y += planeH/2;
 scene.add(plane);
 
-controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 
 camera.position.set( -planeW * numH/3, -planeH * numW/3, 10); // to get a better view of game
@@ -91,13 +53,19 @@ var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 scene.add( light );
 
 var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-directionalLight.position.set( 0, 1, 0 );
+directionalLight.position.set( 1, 1, 1 );
 scene.add( directionalLight );
 
 var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
 directionalLight.position.set( -1, -1, -1 );
 scene.add( directionalLight );
 var queue = new Dequeue();
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+directionalLight.position.set( 1, 1, 1 );
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+directionalLight.position.set( 1, 1, -1 );
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+directionalLight.position.set( 1, 1, 1 );
 var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
 directionalLight.position.set( 1, 1, 1 );
 scene.add( directionalLight );
@@ -109,9 +77,12 @@ queue.push(firstcube);
 
 // add some food
 var r = 0.5;
-var geometry = new THREE.SphereGeometry( r, 32, 32 );
-var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+var geometry = new THREE.SphereBufferGeometry( r, 32, 32 );
+// var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+var material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('images/ice.jpg',THREE.SphericalRefractionMapping) } );
+
 var sphere = new THREE.Mesh( geometry, material );
+sphere.position.z += r;
 scene.add( sphere );
 var render = function () {
   setTimeout( function() {
@@ -123,6 +94,8 @@ var render = function () {
   // cube.position.y = pos.y;
   sphere.position.x = food.x + r;
   sphere.position.y = food.y + r;
+  sphere.rotation.z += 0.1;
+  sphere.rotation.x += 0.05;
   if ( collision(queue, pos) )
 	{
 		console.log("GAME OVER");
@@ -150,19 +123,23 @@ var render = function () {
   	}
   if ( keyboard.pressed("up") )
   	{
-  		direction = "up";
+  		if ( direction != "down" )
+  			direction = "up";
   	}
   if ( keyboard.pressed("down") )
     {
-    	direction = "down";
+    	if ( direction != "up" )
+    		direction = "down";
     }
   if ( keyboard.pressed("left") )
     {
-    	direction = "left";
+    	if ( direction != "right" )
+    		direction = "left";
     }
   if ( keyboard.pressed("right") )
     {
-    	direction = "right";
+    	if ( direction != "left" ) 
+    		direction = "right";
     }	
   // console.log(pos.x+ " : "+ pos.y);
   if ( direction == "up" )
@@ -188,7 +165,33 @@ var render = function () {
 foodpt = getFreeLocation(queue);
 food.x = foodpt.x;
 food.y = foodpt.y;
+
 render();
+
+function eat(x, y)
+{
+	return x == food.x && y == food.y;
+};
+function collision(list, pos)
+{
+	var ptr = list._head;
+	ptr = ptr._next	;
+	while ( ptr != null )
+	{
+		mynode = ptr._data;
+		// console.log("HALO: "+mynode);
+		if ( mynode != null )
+		{	
+			// console.log(pos);
+			// console.log(mynode.position);
+			if ( mynode.position.x - cside/2 == pos.x && mynode.position.y - cside/2 == pos.y)
+				return 1;
+		}
+		ptr = ptr._next;
+	}
+	return 0;
+};
+
 function presentIn(list, x, y)
 {
 	for(var i = 0 ; i < list.length ; i++)
@@ -245,4 +248,7 @@ function getFreeLocation(list)
 	mypos.x = -1;
 	mypos.y = -1;
 	return mypos; 
+}
+function mod(n, m) {
+        return ((n % m) + m) % m;
 }
