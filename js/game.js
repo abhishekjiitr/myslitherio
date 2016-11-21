@@ -7,7 +7,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 var pos = new Object;
-
+var score = 0;
 var food = new Object;
 food.x = 1;
 food.y = 1;
@@ -61,20 +61,19 @@ directionalLight.position.set( -1, -1, -1 );
 scene.add( directionalLight );
 var queue = new Dequeue();
 var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-directionalLight.position.set( 1, 1, 1 );
+directionalLight.position.set( 0, 0, 1 );
 var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-directionalLight.position.set( 1, 1, -1 );
+directionalLight.position.set( 0, -1, 0 );
 var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-directionalLight.position.set( 1, 1, 1 );
-var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-directionalLight.position.set( 1, 1, 1 );
+directionalLight.position.set( -1, 0, 0 );
 scene.add( directionalLight );
 var queue = new Dequeue();
 
 firstcube = cube.clone();
 scene.add( firstcube );
 queue.push(firstcube);
-
+var gameon = true;
+var id;
 // add some food
 var r = 0.5;
 var geometry = new THREE.SphereBufferGeometry( r, 32, 32 );
@@ -86,8 +85,8 @@ sphere.position.z += r;
 scene.add( sphere );
 var render = function () {
   setTimeout( function() {
-
-        requestAnimationFrame( render );
+  		if ( gameon )
+        	id = requestAnimationFrame( render );
 
     }, 1000 / 6);
   // cube.position.x = pos.x;
@@ -98,6 +97,11 @@ var render = function () {
   sphere.rotation.x += 0.05;
   if ( collision(queue, pos) )
 	{
+		alert("GAME OVER! You managed to score " + score + " points.");
+		gameon = false;
+		cancelAnimationFrame( id );
+        window.cancelAnimationFrame(id);
+
 		console.log("GAME OVER");
 	}
 
@@ -116,7 +120,8 @@ var render = function () {
   	}
   else
   	{
-  		console.log("EAT");
+  		score++;
+  		console.log("Score: " + score);
   		newloc = getFreeLocation(queue);
   		food.x = newloc.x;
   		food.y = newloc.y;
@@ -230,7 +235,7 @@ function getFreeLocation(list)
 
 	rx = mod(Math.floor(Math.random()*planeW), planeW);
 	ry = mod(Math.floor(Math.random()*planeW), planeH);
-	console.log(rx + " : " + ry);
+	// console.log(rx + " : " + ry);
 	for(var i = 0 ; i < planeW ; i++)
 	{
 		for ( var j = 0 ; j < planeH ; j++ )
