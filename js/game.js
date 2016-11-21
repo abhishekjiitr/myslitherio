@@ -14,18 +14,22 @@ var pos = new Object;
 pos.x = 0;
 pos.y = 0;
 var food = new Object;
-food.x = -1;
-food.y = -1;
-
+food.x = 1;
+food.y = 1;
+function eat(x, y)
+{
+	return x == food.x && y == food.y;
+}
 var direction = "up";
 var cside = 1;
 var geometry = new THREE.BoxGeometry( cside, cside, cside );
 var material = new THREE.MeshNormalMaterial();
 var cube = new THREE.Mesh( geometry, material );
-scene.add( cube );
-scene.add( cube.clone() );
 cube.position.x += cside / 2;
 cube.position.y += cside / 2;
+
+
+	// scene.add( cube.clone() );
 var keyboard = new THREEx.KeyboardState();
 
 // generate a grid!
@@ -52,7 +56,11 @@ camera.rotation.x += 30 * Math.PI / 180;
 camera.rotation.y -= 20 * Math.PI / 180;
 camera.rotation.z -= 10 * Math.PI / 180;
 
-var queue = new Queue();
+var queue = new Dequeue();
+
+firstcube = cube.clone();
+scene.add( firstcube );
+queue.push(firstcube);
 
 var render = function () {
   setTimeout( function() {
@@ -60,9 +68,20 @@ var render = function () {
         requestAnimationFrame( render );
 
     }, 1000 / 6);
-  cube.position.x = pos.x;
-  cube.position.y = pos.y;
+  // cube.position.x = pos.x;
+  // cube.position.y = pos.y;
+  copy = cube.clone();
+  copy.position.x += pos.x - 0.5;
+  copy.position.y += pos.y - 0.5;
+  queue.push(copy);
+  scene.add(copy);
   // take input 
+  if ( !eat(pos.x, pos.y) )
+  	{
+  		last = queue.shift();
+  		scene.remove(last);
+  		// queue.pop();
+  	}
   if ( keyboard.pressed("up") )
   	{
   		direction = "up";
@@ -96,7 +115,7 @@ var render = function () {
   	{
   		pos.x = mod(pos.x+1, planeW);
   	}
-    cube.rotation.x += 0.1;
+    // cube.rotation.x += 0.1;
 	    
   renderer.render( scene, camera );
 };
