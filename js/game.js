@@ -107,17 +107,12 @@ firstcube = cube.clone();
 scene.add( firstcube );
 queue.push(firstcube);
 
-// add some cupcake
-loader = new THREE.ColladaLoader();
-loader.load('models/cupcake.dae',function colladaReady( collada ){
-player = collada.scene;
-skin = collada.skins [ 0 ];
-player.rotation.x += Math.PI * 2;
-player.rotation.y += Math.PI * 2;
-player.position.z = 0.3;
-player.scale.set(0.7, 0.7, 0.7);
-scene.add( player );
-});
+// add some food
+var r = 0.5;
+var geometry = new THREE.SphereGeometry( r, 32, 32 );
+var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+var sphere = new THREE.Mesh( geometry, material );
+scene.add( sphere );
 var render = function () {
   setTimeout( function() {
 
@@ -126,6 +121,8 @@ var render = function () {
     }, 1000 / 6);
   // cube.position.x = pos.x;
   // cube.position.y = pos.y;
+  sphere.position.x = food.x + r;
+  sphere.position.y = food.y + r;
   if ( collision(queue, pos) )
 	{
 		console.log("GAME OVER");
@@ -143,6 +140,13 @@ var render = function () {
   		last = queue.shift();
   		scene.remove(last);
   		// queue.pop();
+  	}
+  else
+  	{
+  		console.log("EAT");
+  		newloc = getFreeLocation(queue);
+  		food.x = newloc.x;
+  		food.y = newloc.y;
   	}
   if ( keyboard.pressed("up") )
   	{
@@ -181,5 +185,64 @@ var render = function () {
 	    
   renderer.render( scene, camera );
 };
-
+foodpt = getFreeLocation(queue);
+food.x = foodpt.x;
+food.y = foodpt.y;
 render();
+function presentIn(list, x, y)
+{
+	for(var i = 0 ; i < list.length ; i++)
+	{
+		var listpt = list[i];
+		if ( listpt.x == x && listpt.y == y )
+			return 1;
+	}
+	return 0;
+}
+function getFreeLocation(list)
+{
+	positions = []
+	var ptr = list._head;
+	ptr = ptr._next	;
+	while ( ptr != null )
+	{
+		mynode = ptr._data;
+		// console.log("HALO: "+mynode);
+		if ( mynode != null )
+		{	
+			// console.log(pos);
+			// console.log(mynode.position);
+			if ( mynode.position.x - cside/2 == pos.x && mynode.position.y - cside/2 == pos.y)
+				{
+					var x = mynode.position.x - cside/2;
+					var y = mynode.position.y - cside/2;
+					var position = new Object();
+					position.x = x;
+					position.y = y;
+					positions.push(position);
+				}
+		}
+		ptr = ptr._next;
+	}
+
+	rx = mod(Math.floor(Math.random()*planeW), planeW);
+	ry = mod(Math.floor(Math.random()*planeW), planeH);
+	console.log(rx + " : " + ry);
+	for(var i = 0 ; i < planeW ; i++)
+	{
+		for ( var j = 0 ; j < planeH ; j++ )
+		{
+			var posx = mod(rx+i, planeW);
+			var posy = mod(ry+j, planeH);
+			mypos = new Object();
+			mypos.x = posx;
+			mypos.y = posy; 
+			if ( !presentIn(positions, posx, posy) )
+				return mypos;
+		}
+	}
+	var mypos = new Object();
+	mypos.x = -1;
+	mypos.y = -1;
+	return mypos; 
+}
