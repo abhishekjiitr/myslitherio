@@ -3,6 +3,7 @@ a snake game made using Three.JS and WebGL
 
 # play
 game deployed at: https://abhishekjiitr.github.io/myslitherio/
+Make sure that WebGL and Hardware Acceleration are turned on.
 
 # screenshots
 ![](images/screenshot.png)
