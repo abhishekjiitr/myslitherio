@@ -59,6 +59,9 @@ scene.add( directionalLight );
 var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
 directionalLight.position.set( -1, -1, -1 );
 scene.add( directionalLight );
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+directionalLight.position.set( planeW * numW / 2, planeH * numH / 2, 5 );
+scene.add( directionalLight );
 var queue = new Dequeue();
 var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
 directionalLight.position.set( 0, 0, 1 );
@@ -94,7 +97,7 @@ var render = function () {
 			if ( gameon )
 	    	id = requestAnimationFrame( render );
 
-	}, 1000 / (score+2.9));
+	}, 1000 / (score*0.66+4.6));
 
 	sphere.position.x = food.x + r;
 	sphere.position.y = food.y + r;
@@ -102,6 +105,7 @@ var render = function () {
 	sphere.rotation.x += 0.05;
 	if ( collision(queue, pos) )
 	{
+		document.getElementById("score").innerHTML = "GAME OVER, Final Score: " + score;
 		alert("GAME OVER! You managed to score " + score + " points.");
 		gameon = false;
 		cancelAnimationFrame( id );
@@ -133,6 +137,8 @@ var render = function () {
 			newloc = getFreeLocation(queue);
 			food.x = newloc.x;
 			food.y = newloc.y;
+			var audio = new Audio('sound/eat.mp3');
+			audio.play();
 		}
 
   renderer.render( scene, camera );
