@@ -14,3 +14,235 @@
 	vertical-align: middle;
 	line-height: 90px;       /* the same as your div height */
 }
+
+ul.ribbon-badge{
+    padding:0;
+    margin:150px auto;
+    width:245px;
+    height:245px;
+    border-radius:50%;
+    position:relative;
+    box-shadow:
+        0 0 25px 0 black,
+        0 0 25px 0 #000 inset;
+}
+ul.ribbon-badge  li{
+    z-index:0;
+    display:inline-block;
+    background:#3875ff;
+    width:250px;
+    height:35px;
+    left:-3px;
+    top:105px;
+    position:absolute;
+}
+
+
+
+ ul.ribbon-badge li.strip:nth-child(2){
+/*transform*/
+-webkit-transform:rotate(30deg);
+   -moz-transform:rotate(30deg);
+    -ms-transform:rotate(30deg);
+     -o-transform:rotate(30deg);
+        transform:rotate(30deg);
+}
+ul.ribbon-badge li.strip:nth-child(3){
+/*transform*/
+-webkit-transform:rotate(60deg);
+   -moz-transform:rotate(60deg);
+    -ms-transform:rotate(60deg);
+     -o-transform:rotate(60deg);
+        transform:rotate(60deg);
+}
+ul.ribbon-badge li.strip:nth-child(4){
+/*transform*/
+-webkit-transform:rotate(90deg);
+   -moz-transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+     -o-transform:rotate(90deg);
+        transform:rotate(90deg);
+}
+ul.ribbon-badge li.strip:nth-child(5){
+/*transform*/
+-webkit-transform:rotate(120deg);
+   -moz-transform:rotate(120deg);
+    -ms-transform:rotate(120deg);
+     -o-transform:rotate(120deg);
+        transform:rotate(120deg);
+}
+ul.ribbon-badge li.strip:nth-child(6){
+/*transform*/
+-webkit-transform:rotate(150deg);
+   -moz-transform:rotate(150deg);
+    -ms-transform:rotate(150deg);
+     -o-transform:rotate(150deg);
+        transform:rotate(150deg);
+}
+  
+ul.ribbon-badge li.strip:after{
+content:"";
+display:inline-block;
+background:#3875ff;
+width:250px;
+height:35px;
+left:-3px;
+top:105px;
+/*transform*/
+-webkit-transform:rotate(10deg);
+   -moz-transform:rotate(10deg);
+    -ms-transform:rotate(10deg);
+     -o-transform:rotate(10deg);
+        transform:rotate(10deg);
+}
+ 
+ul.ribbon-badge, 
+ul.ribbon-badge li.strip, 
+ul.ribbon-badge li.strip:after,
+ul.ribbon-badge li.strip:before{
+            background:#0093ff;
+            background: linear-gradient(45deg,transparent 40%,rgba(113, 113, 113, 0.28) 40%,rgba(178, 216, 255, 0.85) 60%,transparent 60%),
+            linear-gradient(rgba(0, 147, 255, 0.6),rgba(0, 147, 255, 0.6));
+     background: -webkit-linear-gradient(45deg,transparent 40%,rgba(113, 113, 113, 0.28) 40%,rgba(178, 216, 255, 0.85) 60%,transparent 60%),
+            -webkit-linear-gradient(rgba(0, 147, 255, 0.6),rgba(0, 147, 255, 0.6));
+    background:-webkit-gradient(linear,left bottom,right top,color-stop(40%,transparent),color-stop(40%,rgba(113, 113, 113, 0.28)),color-stop(60%,rgba(178, 216, 255, 0.85)),color-stop(60%,transparent)),-webkit-gradient(linear, left top, left bottom, from(rgba(0, 147, 255, 0.6)),to(rgba(0, 147, 255, 0.6)));
+     background: -moz-linear-gradient(45deg,transparent 40%,rgba(113, 113, 113, 0.28) 40%,rgba(178, 216, 255, 0.85) 60%,transparent 60%),
+            -moz-linear-gradient(rgba(0, 147, 255, 0.6),rgba(0, 147, 255, 0.6));
+     background: -o-linear-gradient(45deg,transparent 40%,rgba(113, 113, 113, 0.28) 40%,rgba(178, 216, 255, 0.85) 60%,transparent 60%),
+            -o-linear-gradient(rgba(0, 147, 255, 0.6),rgba(0, 147, 255, 0.6));
+     background: -ms-linear-gradient(45deg,transparent 40%,rgba(113, 113, 113, 0.28) 40%,rgba(178, 216, 255, 0.85) 60%,transparent 60%),
+            -ms-gradient(rgba(0, 147, 255, 0.6),rgba(0, 147, 255, 0.6));
+            background-size: 4px 4px;
+}
+  
+ul.ribbon-badge li.strip:before{
+    content:"";
+    display:inline-block;
+    background:radial-gradient(circle,black,rgba(62, 151, 255, 0.25));
+    width:250px;
+    height:40px;
+    position:absolute;
+}
+
+ul.ribbon-badge li.inner{
+    z-index:10;
+    width:170px;
+    height:170px;
+    border-radius:50%;
+    background-color:#0093ff;
+    background: linear-gradient(90deg,transparent 30%,rgba(0, 130, 226, 0.59) 30%,rgba(106, 192, 255, 0.72) 70%,transparent 70%),linear-gradient(#67bfff,#22a2ff);
+    background: -webkit-linear-gradient(0deg,transparent 30%,rgba(0, 130, 226, 0.59) 30%,rgba(106, 192, 255, 0.72) 70%,transparent 70%),-webkit-linear-gradient(#67bfff,#22a2ff);
+    background: -webkit-gradient(linear, left top, right top, color-stop(30%,transparent),color-stop(30%,rgba(0, 130, 226, 0.59)),color-stop(70%,rgba(106, 192, 255, 0.72)),color-stop(70%,transparent)), -webkit-gradient(linear, left top, left bottom, from(#67bfff),to(#22a2ff));
+    background: -moz-linear-gradient(0deg,transparent 30%,rgba(0, 130, 226, 0.59) 30%,rgba(106, 192, 255, 0.72) 70%,transparent 70%),-moz-linear-gradient(#67bfff,#22a2ff);
+    background: -o-linear-gradient(0deg,transparent 30%,rgba(0, 130, 226, 0.59) 30%,rgba(106, 192, 255, 0.72) 70%,transparent 70%),-o-linear-gradient(#67bfff,#22a2ff);
+    background: -ms-linear-gradient(0deg,transparent 30%,rgba(0, 130, 226, 0.59) 30%,rgba(106, 192, 255, 0.72) 70%,transparent 70%),-ms-linear-gradient(#67bfff,#22a2ff);
+    background-size: 3px 3px;
+    position:absolute;
+    left:36px;
+    top:39px;
+    box-shadow:
+        0 0 0 1px rgba(253, 253, 253, 0.26)  inset,
+        0 0 0 3px #33a9ff  inset,
+        0 0 0 4px #2fa7ff inset,
+        0 0 2px 5px rgba(0, 57, 98, 0.62) inset,
+        0 0 5px 0 rgba(0, 0, 0, 0.57),
+        0 0 40px 5px rgba(0, 0, 0, 0.42);
+} 
+
+
+ul.ribbon-badge li.inner:after,
+ul.ribbon-badge li.inner:before{
+    display:none;
+}
+ul.ribbon-badge li.inner span{
+    position:absolute;
+    color:#3379ff;
+    color:rgba(51, 121, 255, 0.48);
+    text-align:center;
+    font-size:35px;
+    font-weight:bolder;
+    font-family:verdana;
+    text-transform:uppercase;
+    line-height:30px;
+    letter-spacing:-3px;
+    top:30px;
+    left:-2px;
+    
+}
+/*following lines will add inner shadow effect to text*/
+ul.ribbon-badge li.inner span:before, .inner span:after{
+    content: attr(title);
+    position:absolute;
+}
+ul.ribbon-badge li.inner span:before{
+    top:1px;
+    left:1px;
+    color:#262626;
+    color:rgba(38, 38, 38, 0.39);
+}
+ul.ribbon-badge li.inner span:after{
+    top:2px;
+    left:2px;
+    color:#1b8eff;
+    color:rgba(27, 142, 255, 0.29);
+}
+
+ul.ribbon-badge li.tail{
+    position:absolute;
+    top:220px;
+    background:none;
+    z-index:-1;   
+}  
+ul.ribbon-badge li.tail:before, 
+ul.ribbon-badge li.tail:after{
+    content:"";
+    position:absolute;
+    background-color:#1b8eff;
+    background-image:linear-gradient(0deg,transparent 20%,rgba(113, 113, 113, 0.28) 20%,rgba(178, 216, 255, 0.85) 40%,transparent 40%,rgba(113, 113, 113, 0.28) 60%,rgba(178, 216, 255, 0.85) 80%,transparent 80%),linear-gradient(rgba(26, 134, 214, 0.6),rgba(0, 89, 154, 0.6));
+background-image:-webkit-linear-gradient(90deg,transparent 20%,rgba(113, 113, 113, 0.28) 20%,rgba(178, 216, 255, 0.85) 40%,transparent 40%,rgba(113, 113, 113, 0.28) 60%,rgba(178, 216, 255, 0.85) 80%,transparent 80%),-webkit-linear-gradient(rgba(26, 134, 214, 0.6),rgba(0, 89, 154, 0.6));
+background-image:-webkit-gradient(linear,left bottom,left top,color-stop(20%,transparent),color-stop(20%,rgba(113, 113, 113, 0.28)),color-stop(40%,rgba(178, 216, 255, 0.85)), color-stop(40%,transparent),color-stop(60%,rgba(113, 113, 113, 0.28)),color-stop(80%,rgba(178, 216, 255, 0.85)),color-stop(80%,transparent)),-webkit-gradient(linear,left top,left bottom,from(rgba(26, 134, 214, 0.6)),to(rgba(0, 89, 154, 0.6))); 
+background-image:-moz-linear-gradient(90deg,transparent 20%,rgba(113, 113, 113, 0.28) 20%,rgba(178, 216, 255, 0.85) 40%,transparent 40%,rgba(113, 113, 113, 0.28) 60%,rgba(178, 216, 255, 0.85) 80%,transparent 80%),-moz-linear-gradient(rgba(26, 134, 214, 0.6),rgba(0, 89, 154, 0.6));
+background-image:-o-linear-gradient(90deg,transparent 20%,rgba(113, 113, 113, 0.28) 20%,rgba(178, 216, 255, 0.85) 40%,transparent 40%,rgba(113, 113, 113, 0.28) 60%,rgba(178, 216, 255, 0.85) 80%,transparent 80%),-o-linear-gradient(rgba(26, 134, 214, 0.6),rgba(0, 89, 154, 0.6));
+background-image:-ms-linear-gradient(90deg,transparent 20%,rgba(113, 113, 113, 0.28) 20%,rgba(178, 216, 255, 0.85) 40%,transparent 40%,rgba(113, 113, 113, 0.28) 60%,rgba(178, 216, 255, 0.85) 80%,transparent 80%),-ms-linear-gradient(rgba(26, 134, 214, 0.6),rgba(0, 89, 154, 0.6));
+    background-size:4px 4px;
+    box-shadow:8px 0 10px 2px rgba(0, 0, 0, 0.28);  
+            /*backface-visibility*/
+-webkit-backface-visibility:hidden;
+   -moz-backface-visibility:hidden;
+    -ms-backface-visibility:hidden;
+     -o-backface-visibility:hidden;
+        backface-visibility:hidden;
+    width:0;
+    height:0;
+    border:25px solid transparent;
+    left:0;
+    border-left:25px solid rgb(41, 41, 41);
+    border-right-width:150px;
+}
+
+ul.ribbon-badge li.tail:before{
+-webkit-transform:rotate(-75deg);
+   -moz-transform:rotate(-75deg);
+    -ms-transform:rotate(-75deg);
+     -o-transform:rotate(-75deg);
+        transform:rotate(-75deg);
+}
+ul.ribbon-badge li.tail:after{
+-webkit-transform:rotate(-105deg);
+   -moz-transform:rotate(-105deg);
+    -ms-transform:rotate(-105deg);
+     -o-transform:rotate(-105deg);
+        transform:rotate(-105deg);
+        top:0;
+        left:70px;
+}
+
+      .byline{
+  text-align:center;
+  font-size:18px;
+        color:#1b8eff;
+}
+.byline a{
+  text-decoration:none;
+  color: #dbdbdb;
+} 
