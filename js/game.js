@@ -1,6 +1,6 @@
 var scene = new THREE.Scene();
 var aspect = window.innerWidth / window.innerHeight;
-var camera = new THREE.PerspectiveCamera( 90, aspect, 0.1, 1000 );
+var camera = new THREE.PerspectiveCamera( 75, aspect, 0.1, 1000 );
 var renderer = new THREE.WebGLRenderer();
 renderer.setClearColor (0xf2fdff, 1);
 renderer.setSize( window.innerWidth, window.innerHeight );
@@ -44,10 +44,10 @@ scene.add(plane);
 
 
 
-camera.position.set( +planeW * numH/2, +planeH * numW/2, 13); // to get a better view of game
+camera.position.set( -planeW * numH/5, -planeH * numW/5, 24); // to get a better view of game
 // camera.rotation.x += 30 * Math.PI / 180;
 // camera.rotation.y -= 20 * Math.PI / 180;
-// camera.rotation.z -= 10 * Math.PI / 180;
+camera.rotation.z += 5 * Math.PI / 180;
 
 var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 scene.add( light );
